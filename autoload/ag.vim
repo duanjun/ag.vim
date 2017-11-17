@@ -107,7 +107,9 @@ function! ag#Ag(cmd, args)
   let l:grepformat_bak=&grepformat
   let l:t_ti_bak=&t_ti
   let l:t_te_bak=&t_te
+  let shellpipe_bak=&shellpipe
   try
+    let &shellpipe="&>"
     let &grepprg=g:ag_prg
     let &grepformat=g:ag_format
     set t_ti=
@@ -127,6 +129,7 @@ function! ag#Ag(cmd, args)
       silent! execute a:cmd . " " . escape(l:grepargs, '|')
     endif
   finally
+    let &shellpipe=shellpipe_bak    
     let &grepprg=l:grepprg_bak
     let &grepformat=l:grepformat_bak
     let &t_ti=l:t_ti_bak
